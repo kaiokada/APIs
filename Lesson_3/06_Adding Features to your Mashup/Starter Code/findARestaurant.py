@@ -7,9 +7,9 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
-foursquare_client_id = 'SMQNYZFVCIOYIRAIXND2D5SYBLQUOPDB4HZTV13TT22AGACD'
-foursquare_client_secret = 'IHBS4VBHYWJL53NLIY2HSVI5A1144GJ3MDTYYY1KLKTMC4BV'
-google_api_key = 'AIzaSyBz7r2Kz6x7wO1zV9_O5Rcxmt8NahJ6kos'
+foursquare_client_id = 'PIZQJFH0SVN21OTCQAXQNANTXM10Y1EI4R2HWSVCBKC11UYM'
+foursquare_client_secret = 'HMQFWLKWHMHTT4JQ0EDIXAKBGHGUO1YTLLSXYEJQ3O0DSDYH'
+google_api_key = 'AIzaSyAe-NySTc8skLAh7KAGzoeP_8KHJVPyauA'
 
 def getGeocodeLocation(inputString):
     #Replace Spaces with '+' in URL
@@ -45,13 +45,13 @@ def findARestaurant(mealType, location):
         result = json.loads(h.request(url,'GET')[1])
         #Grab the first image
         #if no image available, insert default image url
-        if result['response']['photos']['items']:
-            firstpic = result['response']['photos']['items'][0]
-            prefix = firstpic['prefix']
-            suffix = firstpic['suffix']
-            imageURL = prefix + "300x300" + suffix
-        else:
-            imageURL = "http://pixabay.com/get/8926af5eb597ca51ca4c/1433440765/cheeseburger-34314_1280.png?direct"
+        #if result['response']['photos']['items']:
+        #    firstpic = result['response']['photos']['items'][0]
+        #    prefix = firstpic['prefix']
+        #    suffix = firstpic['suffix']
+        #    imageURL = prefix + "300x300" + suffix
+        #else:
+        imageURL = "http://pixabay.com/get/8926af5eb597ca51ca4c/1433440765/cheeseburger-34314_1280.png?direct"
 
         restaurantInfo = {'name':restaurant_name, 'address':restaurant_address, 'image':imageURL}
         #print "Restaurant Name: %s " % restaurantInfo['name']

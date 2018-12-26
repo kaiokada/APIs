@@ -4,12 +4,6 @@ from sqlalchemy.orm import sessionmaker
 from models import Base, Puppy
 
 
-engine = create_engine('sqlite:///puppies.db')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
 app = Flask(__name__) 
 
 # Create the appropriate app.route functions, 
@@ -20,6 +14,12 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/puppies", methods = ['GET', 'POST'])
 def puppiesFunction():
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
+
   if request.method == 'GET':
     #Call the method to Get all of the puppies
     return getAllPuppies()
@@ -39,6 +39,11 @@ def puppiesFunction():
 @app.route("/puppies/<int:id>", methods = ['GET', 'PUT', 'DELETE'])
 #Call the method to view a specific puppy
 def puppiesFunctionId(id):
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
   if request.method == 'GET':
     return getPuppy(id)
     
@@ -53,20 +58,40 @@ def puppiesFunctionId(id):
     return deletePuppy(id)
 
 def getAllPuppies():
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
   puppies = session.query(Puppy).all()
   return jsonify(Puppies=[i.serialize for i in puppies])
 
 def getPuppy(id):
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
   puppy = session.query(Puppy).filter_by(id = id).one()
   return jsonify(puppy=puppy.serialize) 
   
 def makeANewPuppy(name,description):
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
   puppy = Puppy(name = name, description = description)
   session.add(puppy)
   session.commit()
   return jsonify(Puppy=puppy.serialize)
 
 def updatePuppy(id,name, description):
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
   puppy = session.query(Puppy).filter_by(id = id).one()
   if not name:
     puppy.name = name
@@ -77,6 +102,11 @@ def updatePuppy(id,name, description):
   return "Updated a Puppy with id %s" % id
 
 def deletePuppy(id):
+  engine = create_engine('sqlite:///puppies.db')
+  Base.metadata.bind = engine
+
+  DBSession = sessionmaker(bind=engine)
+  session = DBSession()
   puppy = session.query(Puppy).filter_by(id = id).one()
   session.delete(puppy)
   session.commit()
@@ -85,4 +115,4 @@ def deletePuppy(id):
 
 if __name__ == '__main__':
     app.debug = False
-    app.run(host='0.0.0.0', port=5000)	
+    app.run(host='0.0.0.0', port=1234)	

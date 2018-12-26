@@ -5,13 +5,20 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 class Puppy(Base):
-    __tablename__ = 'puppy'
-
-
-    name =Column(String(80), nullable = False)
-    id = Column(Integer, primary_key = True)
-    description = Column(String(250))
+	__tablename__ = 'puppy'
+	name = Column(String(80), nullable = False)
+	id = Column(Integer, primary_key = True)
+	description = Column(String(250))
     #Add add a decorator property to serialize data from the database
+	@property
+	def serialize(self):
+		#Returns object data in easily serializeable format
+		return {
+			'name'		: self.name,
+			'id'		: self.id,
+			'description'		: self.description
+			
+		}
 
 
 
